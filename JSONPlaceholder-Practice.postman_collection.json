@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "686e47e6-b58e-4d94-9adb-6c77850eb689",
-    "name": "JSON PLACEHOLDER - PRACTICE",
+    "name": "JSONPlaceholder-Practice",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "49378663",
     "_collection_link": "https://go.postman.co/collection/49378663-686e47e6-b58e-4d94-9adb-6c77850eb689?source=collection_link"
@@ -81,11 +81,10 @@
               "    pm.expect(body).to.be.an(\"array\").that.is.not.empty;",
               "});",
               "",
-              "pm.test(\"User has an Email\"), function() {",
+              "pm.test(\"User has an Email\", function() {",
               "    const body = pm.response.json();",
               "    pm.expect(body[0].email).to.not.be.empty;",
-              "",
-              "}",
+              "});",
               "",
               ""
             ],
@@ -162,6 +161,35 @@
         }
       },
       "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "value": ""
     }
   ]
 }
