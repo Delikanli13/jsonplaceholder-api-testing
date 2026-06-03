@@ -1,0 +1,195 @@
+{
+  "info": {
+    "_postman_id": "686e47e6-b58e-4d94-9adb-6c77850eb689",
+    "name": "JSONPlaceholder-Smoke",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49378663",
+    "_collection_link": "https://go.postman.co/collection/49378663-686e47e6-b58e-4d94-9adb-6c77850eb689?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Post Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response time is less than 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"Response is an array\", function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"Array is not empty\", function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an(\"array\").that.is.not.empty;",
+              "});",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Users Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response time is less than 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"Response is an array\", function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"Array is not empty\", function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an(\"array\").that.is.not.empty;",
+              "});",
+              "",
+              "pm.test(\"User has an Email\", function() {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body[0].email).to.not.be.empty;",
+              "});",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Todo's Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response time is less than 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"Response is an array\", function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"Array is not empty\", function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an(\"array\").that.is.not.empty;",
+              "});",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/todos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "todos"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "value": ""
+    }
+  ]
+}
