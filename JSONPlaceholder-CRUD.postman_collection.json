@@ -8,7 +8,7 @@
   },
   "item": [
     {
-      "name": "Task 1",
+      "name": "Single Post by ID",
       "event": [
         {
           "listen": "test",
@@ -75,7 +75,7 @@
       "response": []
     },
     {
-      "name": "Task 2",
+      "name": "Posts by userId",
       "event": [
         {
           "listen": "test",
@@ -83,11 +83,9 @@
             "exec": [
               "const body = pm.response.json();",
               "",
-              "",
               "pm.test(\"Status code is 200\", function () {",
               "    pm.response.to.have.status(200);",
               "});",
-              "",
               "",
               "pm.test(\"Response is an array\", function () {",
               "    const body = pm.response.json();",
@@ -103,8 +101,7 @@
               "    body.forEach(function(posts){",
               "        pm.expect(posts.userId).to.equal(1);",
               "    })",
-              "});",
-              ""
+              "});"
             ],
             "type": "text/javascript",
             "packages": {},
@@ -138,7 +135,7 @@
       "response": []
     },
     {
-      "name": "Task 3",
+      "name": "Todos by userId",
       "event": [
         {
           "listen": "test",
@@ -198,13 +195,12 @@
       "response": []
     },
     {
-      "name": "Task 4 - Negative Test",
+      "name": "Negative test",
       "event": [
         {
           "listen": "test",
           "script": {
             "exec": [
-              "const body = pm.response.json();",
               "pm.test(\"Status code is 404\", function () {",
               "    pm.response.to.have.status(404);",
               "});",
@@ -236,6 +232,284 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Create a Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.expect(pm.response.code).to.equal(201);",
+              "});",
+              "",
+              "pm.test(\"Response is an object\", function () {",
+              "    pm.expect(body).to.be.an(\"object\");",
+              "});",
+              "",
+              "pm.test(\"Response has id property\", function () {",
+              "    pm.expect(body).to.have.property(\"id\");",
+              "});",
+              "",
+              "pm.test(\"Title matches request\", function () {",
+              "    pm.expect(body.title).to.equal(\"My test post\");",
+              "});",
+              "",
+              "pm.test(\"userId is a number\", function () {",
+              "    pm.expect(body.userId).to.be.a(\"number\");",
+              "});",
+              "",
+              "// Bonus - save postId",
+              "pm.collectionVariables.set(\"postId\", body.id);",
+              "console.log(\"Saved postId:\", body.id);",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\":\"My test post\",\n    \"body\":\"This is a test body\",\n    \"userId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update a Post fully",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Title was updated\", function(){",
+              "    pm.expect(body.title).to.eql(\"Updated title\");",
+              "}); ",
+              "",
+              "pm.test(\"Body Updated\" , function(){",
+              "    pm.expect(body.body).to.equal(\"Updated body\")",
+              "})",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": 1,\n    \"title\": \"Updated title\",\n    \"body\": \"Updated body\",\n    \"userId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update a Post partially",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response matches title,\", function(){",
+              "    pm.expect(body.title).to.eql(\"Patched title\");",
+              "}); ",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Patched title\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.expect(pm.response.code).to.equal(200);",
+              "});",
+              "",
+              "pm.test(\"Response is an empty object\", function () {",
+              "    pm.expect(body).to.be.an(\"object\");",
+              "    pm.expect(Object.keys(body).length).to.equal(0);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": 1,\n    \"title\": \"Updated title\",\n    \"body\": \"Updated body\",\n    \"userId\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Negative Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 500 - JSONPlaceholder returns 500 for non-existent PUT\", function () {",
+              "    pm.expect(pm.response.code).to.equal(500);",
+              "});",
+              "pm.test(\"Response time is under 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts/99999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "99999"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "postId",
+      "value": ""
     }
   ]
 }
