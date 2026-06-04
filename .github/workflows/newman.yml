@@ -22,5 +22,6 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
-      - name: Run Newman collection
-        run: newman run "JSONPlaceholder-Practice.postman_collection.json" --environment "JSONPlaceholder.postman_environment.json"
+      - name: Run CRUD tests
+        run: newman run "JSONPlaceholder-CRUD.postman_collection.json" --environment "JSONPlaceholder.postman_environment.json" --iteration-data posts-data.csv
+

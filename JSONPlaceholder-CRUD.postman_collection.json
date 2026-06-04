@@ -480,6 +480,65 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Data-Driven Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.expect(pm.response.code).to.equal(201);",
+              "});",
+              "",
+              "pm.test(\"Response is an object\", function () {",
+              "    pm.expect(body).to.be.an(\"object\");",
+              "});",
+              "",
+              "pm.test(\"Response has id property\", function () {",
+              "    pm.expect(body).to.have.property(\"id\");",
+              "});",
+              "",
+              "pm.test(\"Title matches data file\", function () {",
+              "    pm.expect(body.title).to.equal(pm.iterationData.get(\"title\"));",
+              "});",
+              "",
+              "pm.test(\"userId matches data file\", function () {",
+              "    pm.expect(body.userId).to.equal(Number(pm.iterationData.get(\"userId\")));",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"{{title}}\",\n    \"body\": \"{{body}}\",\n    \"userId\": {{userId}}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "event": [
