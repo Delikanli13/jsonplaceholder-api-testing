@@ -54,3 +54,31 @@ Automated API test suite for the [JSONPlaceholder](https://jsonplaceholder.typic
 
 **Install Newman:**
 ```bash
+npm install -g newman
+```
+
+**Clone the repo:**
+```bash
+git clone https://github.com/Delikanli13/jsonplaceholder-api-testing.git
+cd jsonplaceholder-api-testing
+```
+
+**Run smoke tests:**
+```bash
+newman run "JSONPlaceholder-Smoke.postman_collection.json" --environment "JSONPlaceholder.postman_environment.json"
+```
+
+**Run CRUD tests:**
+```bash
+newman run "JSONPlaceholder-CRUD.postman_collection.json" --environment "JSONPlaceholder.postman_environment.json" --iteration-data posts-data.csv
+```
+
+## CI/CD
+
+Runs automatically on every push to `main` via GitHub Actions. View run history in the [Actions tab](https://github.com/Delikanli13/jsonplaceholder-api-testing/actions).
+
+## Key learnings
+
+- JSONPlaceholder returns `500` instead of `404` on PUT requests to non-existent resources — documented and asserted accordingly
+- Data-driven testing with CSV allows broad input coverage from a single request
+- Schema validation catches structural API changes that value assertions would miss
