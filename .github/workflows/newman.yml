@@ -25,3 +25,4 @@ jobs:
       - name: Run CRUD tests
         run: newman run "JSONPlaceholder-CRUD.postman_collection.json" --environment "JSONPlaceholder.postman_environment.json" --iteration-data posts-data.csv
 
+
